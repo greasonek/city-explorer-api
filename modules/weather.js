@@ -51,4 +51,4 @@ class Forecast {
   }
 }
 
-module.exports= getWeather;
+module.exports = getWeather;
