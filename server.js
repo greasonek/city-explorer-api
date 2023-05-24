@@ -9,6 +9,7 @@ app.use(cors());
 const PORT = process.env.PORT;
 const getWeather = require('./modules/weather');
 const getMovies = require('./modules/movies');
+const getRest = require('./modules/yelp');
 const notFound = require('./modules/notFound');
 
 app.get('/', (request, response) => {
@@ -17,6 +18,16 @@ app.get('/', (request, response) => {
 
 app.get('/weather', getWeather);
 app.get('/movies', getMovies);
+app.get('/yelp', getRest);
+
+app.use('*', notFound);
+
+app.use((error, request, response, next) => {
+  response.status(500).send(error.message);
+});
+
+
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
 
 // function getWeather (request, response, next){
@@ -67,12 +78,4 @@ app.get('/movies', getMovies);
 //   response.status(404).send('NOT FOUND');
 // });
 
-app.use('*', notFound);
-
-app.use((error, request, response, next) => {
-  response.status(500).send(error.message);
-});
-
-
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
 
